@@ -9,7 +9,7 @@ while [[ 1 -eq 1 ]]; do
     pgrep firefox
     ffon=$?
     if [[ $request == *',"state":"on",'* ]] && [[ $ffon -ne 0 ]]; then
-        startx
+        startx &
     elif [[ $request == *',"state":"off",'* ]] && [[ $ffon -eq 0 ]]; then
         killall firefox
     fi

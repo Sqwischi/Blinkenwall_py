@@ -1,2 +1,2 @@
-#put into user folder
+#put into user folder .xinitrc
 exec firefox --kiosk http://127.0.0.1:8080/blinkenwall
