@@ -1,5 +1,8 @@
 #!/bin/bash
 #do autologinsession
+cd ~/Blinkenwall_py
+waitress-serve --call 'flaskr:create_app' > error_log 2>&1 &
+
 while [[ 1 -eq 1 ]]; do
     #replace Tocken with authorization key from homeassistant
     request=$(curl  -H "Authorization: Bearer Token"  -H "Content-Type: application/json" http://smart.metalab.at/api/states/switch.blinkenwall_smartsocket)
@@ -7,7 +10,6 @@ while [[ 1 -eq 1 ]]; do
     ffon=$?
     if [[ $request == *',"state":"on",'* ]] && [[ $ffon -ne 0 ]]; then
         startx
-        firefox --kiosk http://127.0.0.1:5000/blinkenwall &
     elif [[ $request == *',"state":"off",'* ]] && [[ $ffon -eq 0 ]]; then
         killall firefox
     fi
