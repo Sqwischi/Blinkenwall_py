@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Post{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form action="{{ url_for('library.create')}}" method="post">
+    <label for="uri">URL</label>
+    <input type="url" name="uri" id="uri" value="{{ request.form['uri'] }}">
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('library.create_file')}}" method="post" enctype="multipart/form-data">
+    <label for="gif">GIF</label>
+    <input type="file" name="file" id="file">
+    <input type="submit" value="Upload">
+  </form>
+{% endblock %}

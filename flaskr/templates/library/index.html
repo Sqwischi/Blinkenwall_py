@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Posts{% endblock %}</h1>
+  <a class="action" href="{{ url_for('library.blinkenwall') }}">Blinkenwall</a>
+  {% if g.user %}
+    
+    <a class="action" href="{{ url_for('library.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="blog">
+  {% for post in posts %}
+    <article class="post" id="e{{post['id']}}">
+      
+      <div>
+        
+        <div class="navi"></div>
+        <div class="info">
+          {% if g.user['id'] == post['author_id'] %}
+            <a class="action edit" href="{{ url_for('library.update', id=post['id']) }}">Edit</a>
+          {% endif %}
+          {% if post['type'] == "SHADERTOY" %}
+            <iframe class="uri" width="192" height="144" width="90%" height="90%" frameborder="0" src="{{ post['uri'] }}?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
+          {% endif %}
+          {% if post['type'] == "YOUTUBE" %}
+            <iframe class="uri" width="192" height="144" width="90%" height="90%" frameborder="0" src="{{ post['uri'] }}" allowfullscreen ></iframe>
+          {% endif %}
+          {% if post['type'] == "GIF" %}
+            <img width="192" height="144" class="uri background" src="{{UPLOAD_FOLDER + '/'}}{{ post['id'] }}" width="90%" height="90%">
+          {% endif %}
+        </div>
+      </div>
+      </article>
+    
+  {% endfor %}
+  </div>
+  <footer class="footer">
+    {% if postcount > pagesize %}
+    <hr>
+      {% for i in range((postcount//pagesize) + 1)%}
+        <a id="pageButton" class="pageButtons" href="{{i}}">{{i + 1}}</a>
+      {% endfor %}
+    {% endif %}
+  </footer>
+
+  <style>
+    .blog {
+      width: 100%;
+      height: 160px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .post {
+    height: 100%;
+    position: relative;
+    align-self: center;
+    }
+    @media only screen and (max-width: 600px) {
+      .post {
+        width: 100%;
+      }
+    }
+    @media only screen and (min-width: 601px) {
+      .post {
+        width: 33%;
+      }
+    }
+    .navi,
+    .info {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+    .navi {
+      z-index: 10;
+
+    }
+    .edit {
+      position: relative;
+      z-index: 20;
+    }
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 20;
+    }
+  </style>
+  <script>
+  document.getElementById('library_form').addEventListener("click", function (e){
+    function getArticleId (e) {
+      if (e.target.tagName == 'ARTICLE') {
+        return e.target.id
+      }
+      else {
+        for (var element = e.target; element &&  element.tagName != 'ARTICLE' ; element = element.parentElement){
+          
+        }
+        if (element) {
+          return element.id
+        }
+      }
+    } 
+    if (getArticleId(e)) 
+    fetch('/show/'+getArticleId(e).substring(1))
+  }, {"capture":true});
+</script>
+{% endblock %}
+

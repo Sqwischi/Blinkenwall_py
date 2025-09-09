@@ -1,0 +1,6 @@
+{
+  "UPLOAD_FOLDER": "file_library",
+  "ALLOWED_EXTENSIONS":["gif"],
+  "PAGESIZE": 12,
+  "SECRET_KEY" : ""
+}
