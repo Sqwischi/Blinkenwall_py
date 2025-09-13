@@ -2,6 +2,7 @@
 #do autologinsession
 cd ~/Blinkenwall_py
 source bin/activate
+# can also do a systemd service for continueus web - may be better in case of crashes 
 waitress-serve --host 127.0.0.1 --call 'flaskr:create_app'  >> error_log 2>&1 &
 
 while [[ 1 -eq 1 ]]; do
