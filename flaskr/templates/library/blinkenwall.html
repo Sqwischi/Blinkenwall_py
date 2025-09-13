@@ -38,7 +38,7 @@ bodz {
       console.log(jsonresponse['id']);
       const responceID = jsonresponse['id'];
       if (responceID != currentID)
-        location.reload()
+        location.reload(true)
      })
      .catch(err => console.error(err));
   }
