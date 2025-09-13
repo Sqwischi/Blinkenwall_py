@@ -1,4 +1,5 @@
-{% if post['type'] == "SHADERTOY" %}
+<body>
+  {% if post['type'] == "SHADERTOY" %}
   <iframe class="uri background offset"  allowtransparence="true" width="192" height="146" frameborder="0" src="{{ post['uri'] }}?gui=false&paused=false&muted=true" allowfullscreen></iframe>
 {% endif %}
 {% if post['type'] == "YOUTUBE" %}
@@ -7,7 +8,7 @@
 {% if post['type'] == "GIF" %}
   <img class="uri background" src="{{UPLOAD_FOLDER + '/'}}{{ post['id'] }}" width="192" height="144">
 {% endif %}
-
+</body>
 <style>
 
 .background {
@@ -22,6 +23,9 @@
 
 iframe {
   position: relative;
+}
+bodz {
+  background-color: black
 }
 </style>
 <script>
