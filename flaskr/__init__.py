@@ -2,6 +2,8 @@ import os
 
 from flask import Flask
 import json 
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 
 configfile = None
 with open('config.json', 'r') as f:
@@ -17,6 +19,9 @@ def create_app(test_config=None):
         SECRET_KEY=configfile['SECRET_KEY'] if configfile['SECRET_KEY'] else 'dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
         UPLOAD_FOLDER=UPLOAD_FOLDER,
+    )
+    app.wsgi_app = ProxyFix(
+        app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
     )
 
     if test_config is None:
