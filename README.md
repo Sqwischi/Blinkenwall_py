@@ -21,5 +21,7 @@ python3 -c 'import secrets; print(secrets.token_hex())'
 
 # set up autologin
 # set up auto start of script blinkenwall.sh
+# set up nginx reverse proxy
+
 
 # set up nginx reverse proxy
